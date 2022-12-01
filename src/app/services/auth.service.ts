@@ -1,8 +1,9 @@
 import { Credenciais } from './../models/credenciais';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, EMPTY } from 'rxjs';
 import { Token } from '../models/token';
+import { API_CONFIG } from '../config/api.config';
 
 
 @Injectable({
@@ -12,14 +13,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public authenticate(credenciais: Credenciais): Observable<any> {
-    const baseUrl = "http://localhost8080";
-    return this.http.post<Token>(`${baseUrl}/auth/login`, credenciais).pipe(
+  public authenticate(credenciais: Credenciais): Observable<any> {   
+    return this.http.post<Token>(`${API_CONFIG.baseUrl}/auth/login`, credenciais).pipe(
       tap(token => {
         localStorage.setItem("token", token.accessToken);
+      }),
+      catchError(error => {
+        alert("Erro ao autenticar!");
+        console.error(error);
+        return EMPTY;
       })
     );
-
-    // Autenticar
   }
 }
