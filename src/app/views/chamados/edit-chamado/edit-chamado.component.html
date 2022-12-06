@@ -1,0 +1,42 @@
+<app-nav-bar>
+    <ng-container>
+        <h2>Editar Chamado</h2>
+        <form>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Título</mat-label>
+                <input type="text" name="titulo" matInput [(ngModel)]="chamado.titulo">
+            </mat-form-field>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Descrição</mat-label>
+                <textarea name="descricao" matInput rows="2" [(ngModel)]="chamado.descricao"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Cliente</mat-label>
+                <mat-select name="cliente" [(value)]="chamado.cliente.id">
+                    <mat-option *ngFor="let cliente of clientes" [value]="cliente.id">
+                        {{cliente.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Funcionário</mat-label>
+                <mat-select name="funcionario" [(value)]="chamado.funcionario">
+                    <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
+                        {{funcionario.nome}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+                <mat-label>Status</mat-label>
+                <mat-select name="status" [(value)]="chamado.status">
+                    <mat-option value="RECEBIDO">RECEBIDO</mat-option>
+                    <mat-option value="ATRIBUIDO">ATRIBUIDO</mat-option>
+                    <mat-option value="CONCLUIDO">CONCLUIDO</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button type="submit" mat-raised-button color="primary" (click)="update()">Editar</button>
+            <a type="button" mat-raised-button color="warn" routerLink="/clientes">Cancelar</a>
+        </form>
+    </ng-container>
+</app-nav-bar>
